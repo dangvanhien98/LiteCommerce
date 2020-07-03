@@ -1,0 +1,84 @@
+﻿@model LiteComemerce.Admin.Models.ProductAttributePaginationResult
+
+@{
+    ViewBag.Title = "Product Attributes";
+    ViewBag.SmallTitle = "Thuộc tính Sản Phẩm";
+    int i = 0;
+}
+
+<div class="box box-primary">
+    @*<form action="~/Product/DetailAttributes/" method="get">
+        <div class="box-body">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Input search value..." name="searchValue">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>*@
+</div>
+<form action="~/Product/DeleteAtt/" method="post">
+    <div class="container-fluid row lc-margin-bottom">
+        <div class="col-sm-8">
+            There are <b>@Model.RowCount</b> Attribute. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group">
+                <a href="~/Product" class="btn btn-sm btn-warning">Back</a>
+                <button type="submit" class="btn btn-sm btn-danger">Delete Attributes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" />
+                        </th>
+                        <th style="width:50px">#</th>
+                        <th style="width:auto">Attribute Name</th>
+                        <th style="width:auto">Attribute Value</th>
+                        <th style="width:200px">Display Order</th>
+                        <th style="width:80px">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var productAtt in Model.Data)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="productAttributeIDs" value="@productAtt.AttributeID" />
+                            </td>
+                            <td>@(++i)</td>
+
+                            <td>
+                                <span>
+                                    @productAtt.AttributeName
+                                </span>
+                            </td>
+                            <td>
+                                <span>@productAtt.AttributeValues</span>
+                            </td>
+                            <td>
+                                <span>@productAtt.DisplayOrder</span>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-default" href="~/Product/InputAttributes/@productAtt.AttributeID/">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</form>

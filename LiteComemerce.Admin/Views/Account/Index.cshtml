@@ -1,0 +1,58 @@
+﻿@model LiteCommerce.DomainModels.Employee
+@{
+   
+}
+
+<div class="box box-success container-fluid">
+    <div class="row">
+            <div>
+               
+                <!-- Widget: user widget style 1 -->
+                <div class="box box-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-yellow">
+                        <div style="float: right; padding-left:5px">
+                            <a class="btn btn-sm btn-default" href="~/Employee/Input/@Model.EmployeeID">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                        <div style="float: right">
+                            <a class="btn btn-sm btn-default" href="~/Employee/ChangePassword/@Model.EmployeeID">
+                                <i class="fa fa-key"></i>
+                            </a>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="~/Images/Uploads/@Model.PhotoPath" alt="User Avatar">
+                        </div>
+
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">@Model.FirstName @Model.LastName</h3>
+                        <h5 class="widget-user-desc">@Model.Roles</h5>
+                    </div>
+                    <div class="box-footer ">
+                        <p><b>Title:</b><span style="float: right;">@Model.Title</span></p>
+                        <p><b>BirthDate:</b><span style="float: right;">@Model.BirthDate.ToString("yyyy-MM-dd")</span></p>
+                        <p><b>HireDate:</b><span style="float: right;">@Model.HireDate.ToString("yyyy-MM-dd")</span></p>
+                        <p><b>Email:</b><span style="float: right;">@Model.Email</p>
+                        <p>
+                            <b>Address:</b><span style="float: right;">
+                                @Model.Address
+                            </span>
+                        </p>
+                        <p><b>City:</b><span style="float: right;">@Model.City</span></p>
+                        <p><b>Country:</b><span style="float: right;">@Model.Country</span></p>
+                        <p><b>HomePhone:</b><span style="float: right;">@Model.HomePhone</span></p>
+                        <b>Notes:</b>
+                        <div>
+                            <span>@Model.Notes</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+            </div>
+
+        <!-- /.col -->
+    </div>
+    
+</div>
+

@@ -1,0 +1,94 @@
+﻿@model LiteCommerce.DomainModels.Customer
+@{
+    // ViewBag.Title = "Input";
+    //có trong actions
+}
+
+<div class="box box-primary">
+    <form role="form" action="~/Customer/Input" method="post">
+        <div class="box-header text-right">
+            <a href="~/Customer">Back to List</a>
+        </div>
+        <div class="box-body">
+            <input type="hidden" name="Method" value="@ViewBag.Method" />
+            <div class="form-group">
+                <label>CustomerID:<span style="color:red">@Html.ValidationMessage("CustomerID")</span></label>
+                <input type="text" class="form-control" placeholder="Enter CustomerID" name="CustomerID" value="@Model.CustomerID" @(ViewBag.Method == "Add" ? "" : "readOnly")>
+            </div>
+            <div class="form-group">
+                <label>Company Name:<span style="color:red">@Html.ValidationMessage("CompanyName")</span></label>
+                <input type="text" class="form-control" placeholder="Enter Company Name" name="CompanyName" value="@Model.CompanyName">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Contact Name:<span style="color:red">@Html.ValidationMessage("ContactName")</span></label>
+                    <input type="text" class="form-control" placeholder="Contact Name" name="ContactName" value="@Model.ContactName">
+                </div>
+                <div class="col-sm-6">
+                    <label>Contact Title:<span style="color:red">@Html.ValidationMessage("ContactTitle")</span></label>
+                    <input type="text" class="form-control" placeholder="Ex: Sale Manager" name="ContactTitle" value="@Model.ContactTitle">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <input type="text" class="form-control" placeholder="Address" name="Address" value="@Model.Address">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Country:</label>
+                    <select class="form-control" name="Country">
+                        <option value="">-- Choose Country --</option>
+                        @foreach (var country in SelectListHelper.Countries())
+                        {
+                            if (Model.Country == country.Value)
+                            {
+                                <option value="@country.Value" selected>@country.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+
+                        }
+
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label>City:</label>
+                    <input type="text" class="form-control" placeholder="Ex: New Orleans" name="City" value="@Model.City">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Phone:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <input type="text" class="form-control" name="Phone" value="@Model.Phone">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Fax:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-fax"></i>
+                        </div>
+                        <input type="text" class="form-control" name="Fax" value="@Model.Fax">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Customer">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

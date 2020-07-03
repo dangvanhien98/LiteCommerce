@@ -1,0 +1,149 @@
+﻿@model LiteCommerce.DomainModels.Employee
+@{
+    //ViewBag.Title = "Input";
+}
+
+<div class="box box-primary">
+    <form role="form" action="~/Employee/Input" method="post" enctype="multipart/form-data">
+        <div class="box-header text-right">
+            <a href="~/Employee">Back to List</a>
+        </div>
+        <div class="box-body">
+            <div class="form-group row">
+                <div class="col-sm-8 form-group">
+                    <input type="hidden" name="EmployeeID" value="@Model.EmployeeID" />
+                    <input type="hidden" name="PhotoPath" value="@Model.PhotoPath" />
+
+                    <div class="col-sm-10 form-group row">
+                        <label>Firt Name:<span style="color:red">@Html.ValidationMessage("FirstName")</span></label>
+                        <input type="text" class="form-control" placeholder="First Name" name="FirstName" value="@Model.FirstName">
+                    </div>
+                    <div class="col-sm-10 form-group row">
+                        <label>Last Name:<span style="color:red">@Html.ValidationMessage("LastName")</span></label>
+                        <input type="text" class="form-control" placeholder="Last Name" name="LastName" value="@Model.LastName">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <img class="img-circle" src="~/Images/Uploads/@Model.PhotoPath" alt="User Avatar" height="100px">
+                    <input type="file" class="form-control" placeholder="Photo path" name="uploadFile">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Title:<span style="color:red">@Html.ValidationMessage("Title")</span></label>
+                <input type="text" class="form-control" placeholder="Ex: Sale Manager" name="Title" value="@Model.Title">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label>Roles:</label>
+                    @*<select class="form-control" name="Roles" multiple>
+            <option value="">-- Choose Roles --</option>
+            <option value="Saleman">Saleman</option>
+            <option value="administrator">administrator</option>
+            <option value="Accountadmin">Accountadmin</option>
+        </select>*@
+                    <br />
+                    @if (Model.EmployeeID == 0)
+                    {
+                        <span>Saleman&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.STAFF" /></span><br />
+                        <span>administrator&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.ADMINISTRATOR" /></span><br />
+                        <span>Accountadmin&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.ACCOUNTADMIN" /></span><br />
+                    }
+                    else
+                    {
+                        <span>Saleman&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.STAFF" @(Model.Roles.Contains(WebUserRoles.STAFF) ? "checked" : "unchecked") /></span><br />
+                        <span>Administrator&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.ADMINISTRATOR" @(Model.Roles.Contains(@WebUserRoles.ADMINISTRATOR) ? "checked" : "unchecked") /></span><br />
+                        <span>Accountadmin&nbsp;&nbsp;<input type="checkbox" name="Roles" value="@WebUserRoles.ACCOUNTADMIN" @(Model.Roles.Contains(@WebUserRoles.ACCOUNTADMIN) ? "checked" : "unchecked") /></span><br />                      
+                    }
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label>BirthDate:<span style="color:red">@Html.ValidationMessage("BirthDate")</span></label>
+                <input type="date" class="form-control" placeholder="Birth Date" name="BirthDate" value="@Model.BirthDate.ToString("yyyy-MM-dd")">
+            </div>
+            <div class="form-group">
+                <label>HireDate:<span style="color:red">@Html.ValidationMessage("HireDate")</span></label>
+                <input type="date" class="form-control" placeholder="Hire Date" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-dd")">
+            </div>
+            <div class="form-group">
+                <label>Email:<span style="color:red">@Html.ValidationMessage("Email")</span></label>
+                <input type="text" class="form-control" placeholder="Email" name="Email" value="@Model.Email">
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <input type="text" class="form-control" placeholder="Address" name="Address" value="@Model.Address">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Country:</label>
+                    <select class="form-control" name="Country">
+                        <option value="">-- Choose Country --</option>
+                        @foreach (var country in SelectListHelper.Countries())
+                        {
+                            if (Model.Country == country.Value)
+                            {
+                                <option value="@country.Value" selected>@country.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+
+                        }
+
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label>City:</label>
+                    <input type="text" class="form-control" placeholder="Ex: New Orleans" name="City" value="@Model.City">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Home Phone:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Home Phone" name="HomePhone" value="@Model.HomePhone">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Notes:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-fax"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Notes" name="Notes" value="@Model.Notes">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Password:<span style="color:red">@Html.ValidationMessage("Password")</span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-fax"></i>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" name="Password" value="@Model.Password" @(ViewBag.Title == "Edit a Employee" ? "readonly" : "")>
+                    </div>
+                </div>
+            </div>
+            @*<div class="form-group">
+
+                    <label>Photo:<span style="color:red"></label>
+                    <input type="file" class="form-control" placeholder="Photo path" name="uploadFile">
+                </div>*@
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Employee">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

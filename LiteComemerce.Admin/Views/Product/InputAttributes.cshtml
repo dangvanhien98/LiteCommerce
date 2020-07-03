@@ -1,0 +1,54 @@
+﻿@model LiteCommerce.DomainModels.ProductAttribute
+
+@{
+    // ViewBag.Title = "InputAttributes";
+}
+
+<div class="box box-primary">
+    <form role="form" action="~/Product/InputAttributes/" method="post">
+        <div class="box-header text-right">
+            <a href="~/Product/">Back to List</a>
+        </div>
+        <div class="box-body">
+            <input type="hidden" class="form-control" name="AttributeID" value="@Model.AttributeID">
+            <input type="hidden" class="form-control" name="ProductID" value="@Model.ProductID">
+            <div class="form-group">
+                <label>Attribute Name:<span style="color:red">@Html.ValidationMessage("AttributeName")</span></label>
+                <select class="form-control" name="AttributeName">
+                    @foreach (var att in SelectListHelper.Attributes())
+                    {
+                        if (Model.AttributeName == att.Value)
+                        {
+                            <option value="@att.Value" selected>@att.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@att.Value">@att.Text</option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Attribute Values:<span style="color:red">@Html.ValidationMessage("AttributeValues")</span></label>
+                <input type="text" class="form-control" placeholder="Enter Attribute Values" name="AttributeValues" value="@Model.AttributeValues">
+            </div>
+            <div class="form-group">
+                <label>Display Order:</label>
+                <input type="text" class="form-control" placeholder="Display Order" name="DisplayOrder" value="@Model.DisplayOrder">
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Product/">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

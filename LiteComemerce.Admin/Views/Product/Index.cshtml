@@ -1,0 +1,189 @@
+﻿@model LiteComemerce.Admin.Models.ProductPaginationResult
+
+@{
+    ViewBag.Title = "Product";
+    ViewBag.SmallTitle = "Quản lý sản phẩm";
+    int i = 0;
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+
+        <form action="~/Product" method="get">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <div class="row">
+                            <div class="col-sm-3"><h5>Suppliers</h5></div>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="supplier">
+
+                                    @foreach (var supplier in SelectListHelper.Suppliers())
+                                    {
+                                        if (Model.Supplier == supplier.Value)
+                                        {
+                                            <option value="@supplier.Value" selected>@supplier.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@supplier.Value">@supplier.Text</option>
+                                        }
+
+                                    }
+
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <div class="row">
+                            <div class="col-sm-3"><h5>Categories</h5></div>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="category">
+                                    @foreach (var category in SelectListHelper.Categories())
+                                    {
+                                        if (Model.Category == category.Value)
+                                        {
+                                            <option value="@category.Value" selected>@category.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@category.Value">@category.Text</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Input search value..." value="" name="searchValue">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<form action="~/Product/Delete" method="post">
+    <div class="container-fluid row lc-margin-bottom">
+        <div class="col-sm-8">
+            There are <b>@Model.RowCount</b> Product. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group">
+                <a href="~/Product" class="btn btn-sm btn-warning">Back</a>
+                <a href="~/Product/Input" class="btn btn-sm btn-primary">Add Product</a>
+                <button type="submit" class="btn btn-sm btn-danger">Delete Products</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" />
+                        </th>
+                        <th style="width:50px">#</th>
+                        <th style="width:auto">Photo</th>
+                        <th style="width:auto">Product Name</th>
+                        <th style="width:200px">Product Info</th>
+                        <th style="width:200px">Price</th>
+                        <th style="width:80px">Add Attribute</th>
+                        <th style="width:80px">Detail Attributes</th>
+
+                        <th style="width:80px">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Data)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="productIDs" value="@product.ProductID" />
+                            </td>
+                            <td>@(++i)</td>
+                            <td><img class="img-circle" src="~/Images/Uploads/Products/@product.PhotoPath" alt="User Avatar" height="100px"></td>
+                            <td>
+                                <span>
+                                    @product.ProductName
+                                </span>
+                            </td>
+                            <td>
+                                <span style="display:block">@product.QuantityPerUnit</span>
+
+                            </td>
+                            <td>
+                                <span>@product.UnitPrice</span>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-default" href="~/Product/AddAttribute/@product.ProductID/">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-default" href="~/Product/DetailAttributes/@product.ProductID/">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                            </td>
+
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-default" href="~/Product/Input/@product.ProductID/">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix text-center">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="~/Product?page=1&searchValue=@Model.SearchValue&supplier=@Model.Supplier&category=@Model.Category">«</a></li>
+                @if (Model.Page > 4)
+                {
+                    <li><a>...</a></li>
+                }
+                @*@for (int page = 1; page <= Model.PageCount; page++)*@
+                @{
+                    int page = Model.Page;
+                    int currentpage = page;
+                    int size = Model.PageCount;
+                    if (currentpage == page)
+                    {
+                        size = currentpage + 3;
+                    }
+                    for (page = currentpage - 3; page <= size; page++)
+                    {
+                        if (page == Model.Page)
+                        {
+                            <li class="active"><a href="#">@page</a></li>
+                        }
+                        else
+                        {
+                            if (page > 0 && page <= Model.PageCount)
+                            {
+                                <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&supplier=@Model.Supplier&category=@Model.Category">@page</a></li>
+                            }
+                        }
+                    }
+                }
+
+                @if (Model.Page < Model.PageCount - 3)
+                {
+                    <li><a>...</a></li>
+                }
+                <li><a href="~/Product?page=@Model.PageCount&searchValue=@Model.SearchValue&supplier=@Model.Supplier&category=@Model.Category">»</a></li>
+            </ul>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+﻿@model LiteComemerce.Admin.Models.OrderResult
+@{
+    int i = 1;
+}
+
+
+<form action="~/Order/Delete" method="post">
+    <div class="container-fluid row lc-margin-bottom">
+        <div class="col-sm-8">
+            @*There are <b>@Model.RowCount</b> Categorie. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)*@
+            @if (ViewBag.Title == "Queue Order")
+            {
+                <div class="btn-group">
+                    <a href="~/Order" class="btn btn-sm btn-danger">Đơn Hàng Chờ</a>
+                </div>
+            }
+            else
+            {
+                <div class="btn-group">
+                    <a href="~/Order" class="btn btn-sm btn-primary">Đơn Hàng Chờ</a>
+                </div>
+            }
+            @if (ViewBag.Title == "Accepted Order")
+            {
+                <div class="btn-group">
+                    <a href="~/Order/Index/1" class="btn btn-sm btn-danger">Đơn Hàng Đã Xác Nhận</a>
+                </div>
+            }
+            else
+            {
+                <div class="btn-group">
+                    <a href="~/Order/Index/1" class="btn btn-sm btn-primary">Đơn Hàng Đã Xác Nhận</a>
+                </div>
+            }
+            
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-sm btn-danger">Delete Orders</button>
+            </div>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" />
+                        </th>
+                        <th style="width:50px">#</th>
+                        <th style="width:auto">EmployeeName</th>
+                        <th style="width:200px">Customer</th>
+                        <th style="width:auto">OrderDate</th>
+                        <th style="width:200px">RequiredDate</th>
+                        <th style="width:auto">ShipperDate</th>
+                        <th style="width:80px">Status</th>
+                        <th style="width:50px">Detail</th>
+                        @if (ViewBag.Title == "Queue Order")
+                        {
+                            <th style="width:50px">Accept</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Data)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="orderIDs" value="@order.OrderID" />
+                            </td>
+                            <td>@(i++)</td>
+                            <td>@order.LastName</td>
+                            <td>@order.CompanyName</td>
+                            <td>@order.OrderDate</td>
+                            <td>@order.RequiredDate</td>
+                            <td>@order.ShippedDate</td>
+                            <td>@order.Status</td>
+                            <td class="text-right">
+
+                                <a class="btn btn-sm btn-default" href="~/Order/OrderDetail/@order.OrderID/">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+
+                            </td>
+                            @if (ViewBag.Title == "Queue Order")
+                            {
+                            <td>
+                                <form action="~/Order/Accept/@order.OrderID" method="post">
+                                    <button type="submit" class="btn btn-sm btn-danger">  <i class="fa fa-check" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>

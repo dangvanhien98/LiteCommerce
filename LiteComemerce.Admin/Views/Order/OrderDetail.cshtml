@@ -1,0 +1,52 @@
+﻿@model LiteComemerce.Admin.Models.OrderDetailResult
+@{
+    double total = 0;
+}
+
+<div class="container-fluid row lc-margin-bottom">
+    <div class="col-sm-8">
+        @*There are <b>@Model.RowCount</b> Categorie. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)*@
+      
+            <div class="btn-group">
+                <a href="~/Order" class="btn btn-sm btn-primary">Đơn Hàng Chờ</a>
+            </div>  
+            <div class="btn-group">
+                <a href="~/Order/Index/1" class="btn btn-sm btn-primary">Đơn Hàng Đã Xác Nhận</a>
+            </div>
+
+    </div>
+   
+</div>
+<div class="box box-success container-fluid">
+    <table class="table table-bordered">
+        <tr>
+            <th>ProductName</th>
+            <th>UnitPrice</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>$</th>
+        </tr>
+        <tbody>
+
+            @foreach (var detail in Model.Data)
+            {
+
+                <tr>
+                    <td>@detail.ProductName</td>
+                    <td>@detail.UnitPrice</td>
+                    <td>@detail.Quantity</td>
+                    <td>@Math.Round(@detail.Discount, 2)</td>
+                    @if (detail.Discount == 0)
+                    {
+                        detail.Discount = 1;
+                    }
+                    <th>@Math.Round((detail.UnitPrice * detail.Quantity * detail.Discount), 2) <i> $</i></th>
+                </tr>
+                total += (detail.UnitPrice * detail.Quantity * detail.Discount);
+            }
+        </tbody>
+    </table>
+    <div style="float: right; padding-right: 15px">
+        <h3>Total:@Math.Round(total, 2) <i> $</i></h3>
+    </div>
+</div> 

@@ -1,0 +1,60 @@
+﻿@model LiteCommerce.DomainModels.OrderDetailNew
+@{
+    ViewBag.Title = "AddDetail";
+}
+
+
+<div class="box box-primary">
+    <form role="form" action="~/Order/AddDetail" method="post">
+        <div class="box-header text-right">
+            <a href="~/Order">Back to List</a>
+        </div>
+        <div class="box-body">
+            <input type="hidden" name="OrderID" value="@Model.OrderID"/>
+            <div class="form-group">
+                <label>ProductName:<span style="color:red">@Html.ValidationMessage("ProductID")</span></label>
+                <select class="form-control" name="ProductID">
+                    <option value="">-- Choose ProductName --</option>
+                    @foreach (var cus in SelectListHelper.Product())
+                    {
+                        if (Model.ProductID == Convert.ToInt32(cus.Value))
+                        {
+                            <option value="@cus.Value" selected>@cus.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@cus.Value">@cus.Text</option>
+                        }
+
+                    }
+                </select>
+            </div>
+         
+            <div class="form-group">
+                <label>UnitPrice<span style="color:red">@Html.ValidationMessage("UnitPrice")</span></label>
+                <input type="number" class="form-control" placeholder="Enter UnitPrice" name="UnitPrice" value="@Model.UnitPrice">
+            </div>
+            <div class="form-group">
+                <label>Quantity<span style="color:red">@Html.ValidationMessage("Quantity")</span></label>
+                <input type="number" class="form-control" placeholder="Enter Quantity" name="Quantity" value="@Model.Quantity">
+            </div>
+            <div class="form-group">
+                <label>Discount<span style="color:red"></span></label>
+                <input type="number" min="0" class="form-control" placeholder="Enter Discount" name="Discount" value="@Model.Discount">
+            </div>
+           
+
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Order/Create">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
